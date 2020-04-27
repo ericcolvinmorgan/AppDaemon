@@ -1,0 +1,7 @@
+apps/__pycache__
+compiled
+dashboards
+logs
+namespaces
+appdaemon.yaml
+apps/appletv.py

@@ -1,0 +1,146 @@
+motion_control_basement_automatic:
+  module: motion_control
+  class: MotionControl
+  manual_toggle: {'entity':'input_select.motion_control_downstairs', 'automatic_state': 'Automatic'}
+  motion_sensors: {'binary_sensor.downstairs_occupancy': {'on_state': 'On', 'duration': 1800}, 'binary_sensor.downstairs': {'on_state': 'On', 'duration': 1800}}
+  entity_rulesets: 
+    - start: 'sunrise'
+      end: 'sunset'
+      entities: 
+        - entity: 'light.theater_overhead'
+          device_on: true 
+          attributes:
+            brightness: 200 
+        - entity: 'switch.theater_back'
+          device_on: false
+    - start: 'sunset'
+      end: 'sunrise'
+      entities: 
+        - entity: 'light.theater_overhead'
+          device_on: true
+          attributes:
+            brightness: 100
+        - entity: 'switch.theater_back'
+          device_on: true
+          
+motion_control_basement_movies:
+  module: motion_control
+  class: MotionControl
+  manual_toggle: {'entity':'input_select.motion_control_downstairs', 'automatic_state': 'Movie'}
+  motion_sensors: {'binary_sensor.downstairs_occupancy': {'on_state': 'On', 'duration': 900}, 'binary_sensor.downstairs': {'on_state': 'On', 'duration': 900}}
+  entity_rulesets: 
+    - start: '00:00:00'
+      end: '00:00:00'
+      entities: 
+        - entity: 'light.theater_overhead'
+          device_on: true 
+          attributes:
+            brightness: 75 
+        - entity: 'switch.theater_back'
+          device_on: false
+
+motion_control_foyer_automatic:
+  module: motion_control
+  class: MotionControl
+  manual_toggle: {'entity':'input_select.motion_control_livingroom', 'automatic_state': 'Automatic'}
+  motion_sensors: {'sensor.foyer_motion': {'on_state': '8', 'duration': 600}}
+  entity_rulesets: 
+    - start: '04:00:00'
+      end: '22:00:00'
+      entities: 
+        - entity: 'switch.foyer_light'
+          device_on: true 
+        - entity: 'light.foyer_overhead_1'
+          device_on: true
+          attributes:
+            rgb_color: [255, 255, 255]
+            brightness: 255
+            effect: 'none'
+        - entity: 'light.foyer_overhead_2'
+          device_on: true
+          attributes:
+            rgb_color: [255, 255, 255]
+            brightness: 255
+            effect: 'none'
+        - entity: 'light.foyer_overhead_3'
+          device_on: true
+          attributes:
+            rgb_color: [255, 255, 255]
+            brightness: 255
+            effect: 'none'
+    - start: '22:00:00'
+      end: '04:00:00'
+      entities: 
+        - entity: 'switch.foyer_light'
+          device_on: true 
+        - entity: 'light.foyer_overhead_1'
+          device_on: true
+          attributes:
+            rgb_color: [255, 0, 0]
+            brightness: 150
+            effect: 'none'
+        - entity: 'light.foyer_overhead_2'
+          device_on: true
+          attributes:
+            rgb_color: [255, 0, 0]
+            brightness: 150
+            effect: 'none'        
+        - entity: 'light.foyer_overhead_3'
+          device_on: true
+          attributes:
+            rgb_color: [255, 0, 0]
+            brightness: 150
+            effect: 'none'
+
+motion_control_foyer_ambiance:
+  module: motion_control
+  class: MotionControl
+  manual_toggle: {'entity':'input_select.motion_control_livingroom', 'automatic_state': 'Ambiance'}
+  motion_sensors: {'sensor.foyer_motion': {'on_state': '8', 'duration': 600}}
+  entity_rulesets: 
+    - start: 'sunrise'
+      end: 'sunset'
+      entities: 
+        - entity: 'switch.foyer_light'
+          device_on: true
+        - entity: 'light.foyer_overhead_1'
+          device_on: true
+          attributes:
+            rgb_color: [255, 100, 100]
+            brightness: 255
+            effect: 'colorloop'
+        - entity: 'light.foyer_overhead_2'
+          device_on: true
+          attributes:
+            rgb_color: [100, 255, 100]
+            brightness: 255
+            effect: 'colorloop'        
+        - entity: 'light.foyer_overhead_3'
+          device_on: true
+          attributes:
+            rgb_color: [100, 100, 255]
+            brightness: 255
+            effect: 'colorloop'
+    - start: 'sunset'
+      end: 'sunrise'
+      entities: 
+        - entity: 'switch.foyer_light'
+          device_on: true 
+        - entity: 'light.foyer_overhead_1'
+          device_on: true
+          attributes:
+            brightness: 150
+            rgb_color: [255, 0, 0]
+            effect: 'colorloop'
+        - entity: 'light.foyer_overhead_2'
+          device_on: true
+          attributes:
+            brightness: 150
+            rgb_color: [0, 255, 0]
+            effect: 'colorloop'        
+        - entity: 'light.foyer_overhead_3'
+          device_on: true
+          attributes:
+            brightness: 150
+            rgb_color: [0, 0, 255]
+            effect: 'colorloop'
